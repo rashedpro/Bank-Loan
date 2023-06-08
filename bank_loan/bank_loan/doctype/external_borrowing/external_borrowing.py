@@ -70,24 +70,24 @@ class ExternalBorrowing(Document):
 def make_interest(accounts,external_borrowing_list,child_obj):
 
 	accounts.append({
-					"account":external_borrowing_list["cost_of_financing_account"],
+					"account":external_borrowing_list.cost_of_financing_account,
 					"credit": child_obj["interest_amount"],
 					"credit_in_account_currency":child_obj["interest_amount"],
 				})
 	accounts.append({
-			"account":external_borrowing_list["account_of_deferred_funding_cost"],
+			"account":external_borrowing_list.account_of_deferred_funding_cost,
 			"debit":child_obj["interest_amount"],
 			"debit_in_account_currency":child_obj["interest_amount"],
 			})	
 	
 	accounts.append({
-					"account":external_borrowing_list["bank_accounts"],
+					"account":external_borrowing_list.bank_accounts,
 					"credit": child_obj["interest_amount"],
 					"credit_in_account_currency":child_obj["interest_amount"],
 				})
 	
 	accounts.append({
-			"account":external_borrowing_list["interest_expense_account"],
+			"account":external_borrowing_list.interest_expense_account,
 			"debit":child_obj["interest_amount"],
 			"debit_in_account_currency":child_obj["interest_amount"],
 			})
@@ -99,18 +99,18 @@ def make_journal_entry(external_borrowing_list,child_obj):
 	tmp_list=[]
 	accounts=[]
 	accounts.append({
-					"account":external_borrowing_list["bank_accounts"],
+					"account":external_borrowing_list.bank_accounts,
 					"credit": child_obj["principal_amount"],
 					"credit_in_account_currency":child_obj["principal_amount"],
 				})
 			
 	accounts.append({
-				"account":external_borrowing_list["lender_account"],
+				"account":external_borrowing_list.lender_account,
 				"debit":child_obj["principal_amount"],
 				"debit_in_account_currency":int(child_obj["principal_amount"]),
 				})
 	
-	if external_borrowing_list["rate_of_interest"]>0:
+	if external_borrowing_list.rate_of_interest>0:
 		accounts=make_interest(accounts,external_borrowing_list,child_obj)
 	
 
@@ -127,13 +127,25 @@ def make_journal_entry(external_borrowing_list,child_obj):
 		tmp_list.insert()
 		tmp_list.submit()
 		tmp_obj = frappe.get_doc('Custom Repayment Schedule', child_obj["name"])
+
+		change_external_borrowing_status(external_borrowing_list,child_obj)
+		
 		tmp_obj.db_set("journal_entry",tmp_list.name,commit=True)
 		tmp_obj.save()
 
+def change_external_borrowing_status(external_borrowing_list,child_obj):
+	
+	if child_obj["balance_loan_amount"]>0:
+		external_borrowing_list.db_set("status","Partly Paid",commit=True)	
+	else:
+		external_borrowing_list.db_set("status","Paid",commit=True)
+	external_borrowing_list.save()
+		
 
 def post_loan_entries():
 	child_list=frappe.db.get_all("Custom Repayment Schedule",filters={"payment_date":str(date.today()),"docstatus":1},fields=["*"])
 	for child_obj in child_list:
 		if child_obj["journal_entry"]==None:
-			external_borrowing_list=frappe.db.get_all("External Borrowing",filters={"name":child_obj["parent"]},fields=["*"])[0]
+			# external_borrowing_list=frappe.db.get_all("External Borrowing",filters={"name":child_obj["parent"]},fields=["*"])[0]
+			external_borrowing_list=frappe.get_doc("External Borrowing",child_obj["parent"])
 			make_journal_entry(external_borrowing_list,child_obj)
