@@ -4,6 +4,10 @@
 frappe.ui.form.on('External Borrowing', {
 	refresh: function(frm) {
 		add_view_button(frm);
+		
+		if(frm.doc.docstatus===0){
+			frm.set_value("status","Unpaid");
+		}
 	},
 	onload:function(frm){
 		frm.set_query("bank_accounts", function () {
