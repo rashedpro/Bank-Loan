@@ -1,0 +1,201 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "EX-LOAN-.YYYY.-.#####",
+ "creation": "2023-06-07 09:27:19.611632",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "lender",
+  "posting_date",
+  "column_break_tueat",
+  "company",
+  "jouranl_entery_reference",
+  "loan_details_section",
+  "loan_amount",
+  "repayment_start_date",
+  "column_break_zhwij",
+  "rate_of_interest",
+  "repayment_period_in_months",
+  "account_info_section",
+  "lender_account",
+  "cost_of_financing_account",
+  "column_break_fyzue",
+  "bank_accounts",
+  "account_of_deferred_funding_cost",
+  "interest_expense_account",
+  "section_break_eqz9f",
+  "repayment_schedule",
+  "section_break_ytsze",
+  "user_remark",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "lender",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Lender",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_tueat",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "loan_details_section",
+   "fieldtype": "Section Break",
+   "label": "Loan Details"
+  },
+  {
+   "fieldname": "loan_amount",
+   "fieldtype": "Float",
+   "label": "Loan Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "repayment_start_date",
+   "fieldtype": "Date",
+   "label": "Repayment Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_zhwij",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "rate_of_interest",
+   "fieldtype": "Percent",
+   "label": "Rate Of Interest",
+   "reqd": 1
+  },
+  {
+   "fieldname": "repayment_period_in_months",
+   "fieldtype": "Int",
+   "label": "Repayment Period in Months",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account_info_section",
+   "fieldtype": "Section Break",
+   "label": "Account Info"
+  },
+  {
+   "fieldname": "lender_account",
+   "fieldtype": "Link",
+   "label": "Lender Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cost_of_financing_account",
+   "fieldtype": "Link",
+   "label": "Cost Of Financing Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_fyzue",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bank_accounts",
+   "fieldtype": "Link",
+   "label": "Bank Accounts",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account_of_deferred_funding_cost",
+   "fieldtype": "Link",
+   "label": "Account Of Deferred Funding Cost",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "interest_expense_account",
+   "fieldtype": "Link",
+   "label": "Interest Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "section_break_eqz9f",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "repayment_schedule",
+   "fieldtype": "Table",
+   "label": "Repayment Schedule",
+   "options": "Custom Repayment Schedule",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "External Borrowing",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_ytsze",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "user_remark",
+   "fieldtype": "Small Text",
+   "label": "User Remark",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.docstatus",
+   "fieldname": "jouranl_entery_reference",
+   "fieldtype": "Link",
+   "label": "Jouranl Entery Reference",
+   "options": "Journal Entry",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-06-08 10:25:54.493167",
+ "modified_by": "Administrator",
+ "module": "Bank Loan",
+ "name": "External Borrowing",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
