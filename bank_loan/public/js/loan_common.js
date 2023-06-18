@@ -1,7 +1,7 @@
 frappe.ui.form.on('Loan',{
     refresh(frm){
         if(frm.doc.repayment_schedule && frm.doc.custome_repayment_schedule){
-            frm.set_df_property("repayment_schedule", "read_only", 0);
+            frm.events.allow_editing_child(frm);
         }
     },
     before_submit(frm){
@@ -23,11 +23,23 @@ frappe.ui.form.on('Loan',{
     custome_repayment_schedule(frm){
         if(frm.doc.custome_repayment_schedule){
             frm.doc.repayment_schedule=[];
-            frm.set_df_property("repayment_schedule", "read_only", 0);
+            frm.events.allow_editing_child(frm);
         }else{
             frm.set_df_property("repayment_schedule", "read_only", 1);
+            frm.refresh_field("repayment_schedule");   
+
         }
-        frm.refresh_field("repayment_schedule");   
+    },
+
+    allow_editing_child(frm){
+        frm.set_df_property("repayment_schedule", "read_only", 0);
+
+        frappe.meta.get_docfield(
+			"Repayment Schedule",
+			"principal_amount",
+			frm.doc.name
+		).read_only =0 ;
+        frm.refresh_fields("repayment_schedule");
     }
 });
 
@@ -55,6 +67,7 @@ frappe.ui.form.on("Repayment Schedule", {
 
         })
     },
+
 });
 
 
