@@ -9,6 +9,16 @@ app_color = "grey"
 app_email = "rashed.alqadi@slnee.com"
 app_license = "MIT"
 
+
+
+
+doctype_js={"Loan":"public/js/loan_common.js"}
+
+
+override_doctype_class = {
+	"Loan": "bank_loan.bank_loan.common.loan_common.CustomLoan",
+}
+
 # Includes in <head>
 # ------------------
 
